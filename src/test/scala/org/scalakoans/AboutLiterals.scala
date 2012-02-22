@@ -6,35 +6,42 @@ class AboutLiterals extends KoanSuite {
   koan("integer literals") {
     val i = 1
 
-    i.isInstanceOf[Int] should __
+    i.isInstanceOf[Int] should be (true)
   }
 
   koan("double literals") {
     val f = 2.0
 
-    f.isInstanceOf[___] should be(true)
+    f.isInstanceOf[Double] should be(true)
   }
 
   koan("string literals") {
     val s = "abcd"
 
-    s.isInstanceOf[___] should be(true)
+    s.isInstanceOf[String] should be(true)
 
-    s.toUpperCase() should __
-    s.length() should __
+    s.toUpperCase() should be ("ABCD")
+    s.length() should be (4)
 
-    s.isInstanceOf[java.lang.String] should __
+    s.isInstanceOf[java.lang.String] should be (true)
 
     // sadly no string interpolation
+    // i.e. no "I have a value: ${myVal}"
     val str = "%s - %d".format("abc", 123)
-    str should __
+    str should be("abc - 123")
   }
 
   koan("symbol literals") {
     val s = 'abc
 
-    s.isInstanceOf[___] should be(true)
+    s.isInstanceOf[Symbol] should be(true)
 
-    __ should be theSameInstanceAs('abc)
+    // symbols are interned
+    s should be theSameInstanceAs('abc)
+    val s2 = 'abc
+    s should be theSameInstanceAs(s2)
+    
+    // methods can have spaces, but attributes must be preceded with a '.'
+    s.name should be ("abc")
   }
 }
